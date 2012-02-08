@@ -3,11 +3,14 @@
 \usepackage{anysize}
 \usepackage[pdftex]{graphicx}
 \usepackage{url}
+\usepackage{fixltx2e}
 \usepackage{listings}
 \usepackage{textcomp}
 \usepackage{wrapfig}
 \usepackage{color}
+\usepackage{subfig}
 \usepackage{fancyhdr}
+\usepackage{newclude}
 \usepackage[nodayofweek]{datetime}
 \usepackage[small,compact]{titlesec}
 \usepackage[pdfborder=0]{hyperref}
@@ -36,17 +39,17 @@
 \section{Introduction}
 
 \section{Acquired decision trees}
+    \include*{decision_trees}
 
-\section{Single emotion per exampe}
+\section{Single emotion per example}
 
 \section{Ambiguity}
-
-\section{Cross validation classification results}
-    \subsection{Confusion matrix}
-    \include{confusion_matrix}
+\pagebreak
+\section{Results}
+    \include*{measure}
 
 \section{Pruning}
-    \subsection{\emph{pruning\_example} function}
+    \include*{pruning}
 
 %\pagebreak	
 %\section{References}
