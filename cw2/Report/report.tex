@@ -75,7 +75,7 @@ For deciding the appropriate network topology we experimented with different num
 (10 10 10):0.20
 
 \section{Regularization Methodology}
-The main problem we faced during the training of the Neural Network was the overfitting. The network has been trained with a very low error rate, however when the new data was included, the performance was very bad with a high error rate. Thatâ€™s because the network memorized the samples from the training set but it was not able to adapt to the new situation, resulting overfitting. In order to solve this problem by improving the generalization, two methods have been adopted.
+The main problem we faced during the training of the Neural Network was the overfitting. The network has been trained with a very low error rate, however when the new data was included, the performance was very bad with a high error rate. That’s because the network memorized the samples from the training set but it was not able to adapt to the new situation, resulting overfitting. In order to solve this problem by improving the generalization, two methods have been adopted.
 
 \subsection{Modified Performance Function}
 In this method, the performance function has been changed. The default performance function \emph{MSE} is the mean sum of squares of the network errors on the training set. To improve the generalization, a term that consists of the mean of the sum of squares of the network weights and biases has been added to the \emph{MSE} resulting in the \emph{MSEREG} function. Using this performance function \emph{net.performFcn = msereg} the neural network has smaller weights and biases, and as a result the network is less likely to overfit and its outcome is smoother.
@@ -113,7 +113,7 @@ These graphs show the mean F1 measure computed for each fold
  
   \begin{figure}[h]                                                               
  \begin{center}                                                                  
-           \includegraphics[width=.7\textwidth]{mpfsingle.pdf}                                      
+           \includegraphics[width=.5\textwidth]{mpfsingle.pdf}                                      
  \end{center}                                                                    
  \end{figure} 
 
@@ -157,12 +157,12 @@ These graphs show the mean F1 measure computed for each fold
      \begin{tabular}{ | l || c | c | c | c | c | c | }                           
      \hline                                                                      
            & Anger 1 & Disgust 2 & Fear 3 & Happiness 4 & Sadness 5 & Surprise 6 \\ \hline \hline
-         Anger 1 		& 10 & 0 & 1 & 0 & 1 & 0 \\ \hline                               
+         Anger 1 		& 11 & 0 & 1 & 0 & 0 & 0 \\ \hline                               
          Disgust 2 		& 1 & 21 & 0 & 0 & 0 & 0 \\ \hline                            
-         Fear 3 		& 1 & 1 & 5 & 0 & 0 & 0 \\ \hline                                
-         Happiness 4 	& 0 & 0 & 0 & 24 & 0 & 0 \\ \hline                          
-         Sadness 5 		& 0 & 0 & 0 & 0 & 11 & 1 \\ \hline                             
-         Surprise 6 	& 0 & 0 & 0 & 0 & 0 & 13 \\ \hline                           
+         Fear 3 		& 2 & 0 & 5 & 0 & 0 & 0 \\ \hline                                
+         Happiness 4 	& 0 & 1 & 0 & 23 & 0 & 0 \\ \hline                          
+         Sadness 5 		& 1 & 0 & 0 & 0 & 11 & 0 \\ \hline                             
+         Surprise 6 	& 0 & 0 & 0 & 0 & 0 & 23 \\ \hline                           
      \end{tabular}                                                               
      \\ Six Single-Output Confusion Matrix.                                              
 \end{center}                                                                    
@@ -172,24 +172,24 @@ These graphs show the mean F1 measure computed for each fold
  \begin{tabular}{ | l || c | c | c | c | c | c | }                               
      \hline                                                                      
            							& Anger 1 & Disgust 2 & Fear 3 & Happiness 4 & Sadness 5 & Surprise 6 \\ \hline \hline
-         Avg Recall 				& 0.8333 & 0.9545 & 0.7142 & 1 & 0.9166 & 1 \\ \hline   
-         Avg Precision 				& 0.8333 & 0.9545 & 0.8333 & 1 & 0.9166 & 0.9583 \\ \hline
-         F\textsubscript{1} Measure & 0.8333 & 0.9545 & 0.7692 &  1.0000 &  0.9167 & 0.9787 \\ \hline
+         Avg Recall 				& 0.9167 & 0.9545 & 0.7143 & 0.9583 & 0.9667 & 1 \\ \hline   
+         Avg Precision 				& 0.7333 & 0.9545 & 0.8333 & 1 & 1 & 1 \\ \hline
+         F\textsubscript{1} Measure & 0.8148 & 0.9545 & 0.7692 &  0.9787 &  0.9565 & 1 \\ \hline
      \end{tabular}                                                               
      \\ Six Single-Output evaluation results                                                                                               
  \end{center}                                                                    
 
 
 \begin{description}
-	\item[F\textsubscript{1} Measure Mean] 0.908749938005257
+	\item[F\textsubscript{1} Measure Mean] 0.9123
 	\item[Avg Error] 0.06
 \end{description}
 
 
 \section{Single Output Vs Multi Output Networks}
 For this assignment we were instructed to approach the problem with two different types of networks. The first one was to create one network that produces six outputs of 0 and 1 each that represent the emotion. For example the output 001000 classifies the example to the third emotion. The other approach was to create a single-output network for every emotion(label) and join the results in the end.
-To test more thoroughly the performance of the two approaches we created a script to run the evaluation function that returns the average error for 5 times. This means that the 10-Fold Validation was performed 5 times. The average error returned for both networks was 0.04 for the multi-output network whereas for the single-output networks was slightly higher at 0.06. Additionally the performance(F1 measure) was higher than 9 in both cases with the multi-output network outperforming the single-output approach in terms of f1 measure by 0.02.
+To test more thoroughly the performance of the two approaches we created a script to run the evaluation function that returns the average error for 5 times. This means that the 10-Fold Validation was performed 5 times. The average error returned for both networks was 0.04 for the multi-output network whereas for the single-output networks was slightly higher at 0.06. Additionally the performance(F1 measure) was higher than 9 in both cases with the multi-output network outperforming the single-output approach in terms of f1 measure by 0.01.
 
-Firstly training six single-output networks takes a lot more time than the one multi-output network. Aside from the computational efficiency, the multi-output network suits better in the pattern recognition problem because in this case the six tasks are related, they are all about emotion recognition. The six singe-output networks would be better in the case where the tasks werenâ€™t related at all, for example in the case when one output was about character recognition and another was about emotion recognition.
+Firstly training six single-output networks takes a lot more time than the one multi-output network. Aside from the computational efficiency, the multi-output network suits better in the pattern recognition problem because in this case the six tasks are related, they are all about emotion recognition. The six singe-output networks would be better in the case where the tasks weren’t related at all, for example in the case when one output was about character recognition and another was about emotion recognition.
 
 \end{document}
