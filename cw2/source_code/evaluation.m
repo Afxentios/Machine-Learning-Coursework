@@ -59,6 +59,7 @@ for i=1:examples_no/N:examples_no
     cm_per_fold=conf_matrix(test_targets', y');
     [pr,rc]=precision_recall(cm_per_fold);
     f=fa_measure(1,pr,rc);
+    %Calcuate the mean f1 measure for this fold
     fmean(currentFold)=mean(f);
     
     %Estimate the error for the current subset by comparing it with the
@@ -71,7 +72,8 @@ for i=1:examples_no/N:examples_no
     end
     error(currentFold)=error(currentFold)/N;
     
-    %Find out the tree with the minimum error
+    %Find out the tree with the minimum error in order to return the
+    %optimal single-output nets for saving
     if whichnet==1
         if error_min>error(currentFold)
             error_min=error(currentFold);
@@ -82,11 +84,7 @@ for i=1:examples_no/N:examples_no
     %Sum up all the 10 errors in order to compute the avg error later
     sum=sum+error(currentFold);
 end
-
-    
-    %save('nets_single','optimalnet');
-
-    
+   
 %Display performance(F1Measure) per fold figure
 figure;
 x_axis=[1:10];
@@ -97,7 +95,6 @@ xlabel('Folds');
 ylabel({'Average Error'});
 title('F1 Measure Per Fold (Single Multi-Output Network)');
 ylim([0.3 1.1]);
-%title('F1 Measure Per Fold (Multiple Single-Output Networks)');
 %Compute the average total error of all folds and the average 
 %confusion matrix
 avg_error=(1/N)*sum;

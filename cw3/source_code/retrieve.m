@@ -32,7 +32,7 @@ index=1;
 %choosing the best case is done randomly amongs those cases.
 same_typicality=[];
 if size(min_cases,2)>1
-    for i=1:size(min_cases')
+    for i=1:size(min_cases,2)
         case_i=min_cases(i);
         if cbr.cases(case_i).typicality>=max_typicality
             bestcase=case_i;
@@ -47,7 +47,7 @@ min_vsize_diff=100;
 %If cases that where found with the same similarity, also have the same
 %typicality then we choose the one that has the smaller difference in length.
 if size(same_typicality,2)>1
-    for i=1:size(same_typicality')
+    for i=1:size(same_typicality,2)
         case_i=same_typicality(i);
         vsize_diff=abs(cbr.cases(case_i).prob_length-newcase.prob_length);
         if vsize_diff<=min_vsize_diff

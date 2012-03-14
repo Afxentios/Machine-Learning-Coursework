@@ -1,4 +1,4 @@
-function [cbr] = CBRinit(examples, targets)
+function [cbr] = CBRinit(examples, targets);
 %Get the rows and cols of examples
 [rows, cols]=size(examples);
 
@@ -15,8 +15,8 @@ for i=1:rows
         %Also store the full binary problem
         cbr.cases(i).full_problem(j)=examples(i,j);
     end
-		%Store the problem vector length
-		cbr.cases(i).prob_length=size(cbr.cases(i).problem');
+    %Store the problem vector length
+    cbr.cases(i).prob_length=index-1;
     %Store to the solution the corresponding target
     cbr.cases(i).solution=targets(i);
     %Reset the typicality measure for later use

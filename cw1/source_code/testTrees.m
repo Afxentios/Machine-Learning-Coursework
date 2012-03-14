@@ -13,6 +13,7 @@ y=zeros(10,1);
 for i=1:test_data_rows
     found=0;
     depth=[];
+    min_depth=999;
     max_depth=-1;
     candidate=[];
     %Iterate through the 6 decision trees
@@ -20,13 +21,17 @@ for i=1:test_data_rows
         %Return the classification result for the test data for every
         %emotion
         [res,depth]=check_label(test_data(i,:),trees(k),0);
+        if (depth>max_depth)
+            max_depth=depth;
+            label_max=k;
+        end
         if res==1 
             %Counts how many trees return positive result
             found=found+1;
             %Check if the current depth was bigger
-            if (max_depth<depth)
-                max_depth=depth;
-                label_max=k;
+            if (min_depth>depth)
+                min_depth=depth;
+                label_min=k;
             end
             %Store the candidates in a vector to choose from randomly
             candidate(found)=k;
@@ -36,12 +41,12 @@ for i=1:test_data_rows
     end
     %If the data set was not classified assign it to the label 0.
     if found==0
-        y(i)=0;
+        y(i)=label_max;
     else
         %If the data set was classified as 1 or more emotions we apply one
         %of the following strategies to pick only one emotion.
         if strategy==0 %Choose the label that was decided in the deepest node
-            y(i)=label_max;
+            y(i)=label_min;
         elseif strategy==1 %Choose a random label between the candidates.
             y(i)=candidate(randi(found));
         end

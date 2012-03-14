@@ -11,4 +11,4 @@ for i=1:cols
     convertedCase.full_problem(i)=example(i);
     
 end
-convertedCase.prob_length=size(convertedCase.problem');
+convertedCase.prob_length=size(convertedCase.problem,2);
