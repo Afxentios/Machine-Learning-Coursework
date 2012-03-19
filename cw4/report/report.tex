@@ -1,0 +1,219 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=2cm]{geometry}
+%\usepackage{anysize}
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{wrapfig}
+\usepackage{color}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{newclude}
+\usepackage[nodayofweek]{datetime}
+\usepackage[small,compact]{titlesec}
+\usepackage[pdfborder=0]{hyperref}
+\longdate
+
+\setlength{\parskip}{11pt} 
+\setlength\parindent{0pt}
+
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\fancyplain{}{Machine Learning CBC}}
+\rhead{\fancyplain{}{\today}}
+\cfoot{\fancyplain{}{\thepage}}
+
+
+\title{395 Machine Learning\\\Large{--- Assignment 5 ---}}
+\author{Group 7\\Porfyrios Vasileiou, Afxentios Hadjiminas, John Flanagan.\\
+       \{pv311, ah2411, jf311\}@doc.ic.ac.uk\\ \\
+       \small{CBC helper: Ioannis Marras}\\
+       \small{Course: CO395, Imperial College London}
+}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+In this final coursework we compare all the previous algorithms in order to
+decide which one performs better. To accomplish that, the F1 measure has been
+calculated and compared for all the 3 algorithms. However, this measure is
+easily affected by various parameters so it is not enough by its own to
+determine which algorithm perfoms better. Therefore the algorithms have been
+tested with the T-test and ANOVA methods. 
+
+T-tests and analysis of variance (ANOVA) are well-known statistical methods to
+compare group means.
+
+\section{Training}
+
+All the three algorithms have been trained with the clean data which has been
+provided. Afterwards the algorithms have been tested using the noisy data. From
+the testing the F\textsubscript{1}  Measure has been calculated and it
+presented on the figure~\ref{fig:F1Measure}
+
+\begin{figure}[h]
+\begin{center}
+    \begin{tabular}{| l || c | c | c | c | c | c | c | } \hline
+        Emotion & Anger 1 & Disgust 2 & Fear 3 & Happiness 4 & Sadness 5 & Surprise 6  & Average \\ \hline \hline
+        Decision & 0.6667  & 1.0000 & 0.9444 & 1.0000 & 0.7500  & 1.0000 & 0.8581\\ \hline
+        Neural Networks & 1.0000 & 1.0000 & 0.7785 & 1.0000 & 0.8182 & 1.0000 & 0.9049 \\ \hline
+        CBR & 0.2759  &  0.0000 &  0.9143 & 1.0000 & 0.5714 &  1.0000 & 0.6269 \\ \hline
+    \end{tabular}
+    \caption{F\textsubscript{1} measures for each algorithm for each emotion (trained with clean data  and tested with the noisy data)}
+    \label{fig:F1Measure}
+    \end{center}
+\end{figure}
+
+
+\subsection{Highest average F\textsubscript{1} measure}
+As it can be observed the Neural Networks algorithm has the highest average F\textsubscript{1} measure. 
+
+\subsection{Algorithm performance}
+We have seen that neural networks have performed better for this problem, but
+it is not possible to extrapolate this to mean it is a better algorithm. All of
+these algorithms have inherent advantages and disadvantages. Neural Networks
+for example don’t have fixed performance, its performance depends on the
+initial weights and biases. The current problem features can take only two
+values 0 and 1 preventing the similarity function of the CBR to get
+sufficient information from the distance between two cases. In the case
+that the features could take more values then the CBR would have outperformed the NN.
+
+During cross validation Decision Trees had an initial error of 14\% due to
+being unable to classify an instance with any label or with multiple
+labels. This problem partially is due to errors propagating through the
+tree, after an early incorrect decision in the tree the error propagates to
+an incorrect label. To lower this error value, we used the concept of
+applying the label to a case with the least distance traversed in the tree.
+Due to higher nodes having a higher information gain.
+
+\section{Cross validation and ANOVA testing}
+
+\subsection{Tests on clean data}
+
+\subsubsection{T-tests}
+
+\begin{figure}[h]
+    \begin{center}
+    \begin{tabular}{|l ||c|c|c|} \hline
+    & DT - ANN & DT - CBR & CBR - ANN\\ \hline \hline
+    Anger & 0 & 0 & 0 \\ \hline
+    Disgust & 0 & 0 & 0 \\ \hline
+    Fear & 0 & 0 & 0 \\ \hline
+    Happiness & 0 & 0 & 0 \\ \hline
+    Sadness & 0 & 0 & 0 \\ \hline
+    Surprise & 0 & 0 & 0 \\ \hline
+    \end{tabular}
+    \caption{Clean data t-test}
+    \label{fig:TTest}
+    \end{center}
+\end{figure}
+
+T-tests between algorithms test the hypothesis that two independent samples, in
+the vectors X and Y, come from distributions with equal means. For all the
+tests above the null hypothesis can not be rejected, for any result, at the 5%
+significance level because the algorithm means are equal. 
+
+\subsubsection{ANOVA tests}
+
+\begin{figure}[h]
+    \begin{center}
+    \begin{tabular}{|c||r|r|r|r|r|r|} \hline 
+    Emotion & Anger & Disgust & Fear & Happiness & Sadness & Surprise \\ \hline \hline
+    P-value & 0.5629 & 0.2336 & 0.8737 & 1.0000 & 0.7053 & 0.9867 \\ \hline
+    \end{tabular}
+    \caption{Clean data ANOVA tests}
+    \end{center}
+\end{figure}
+
+ANOVA tests perform comparisons of the means of the three different algorithms
+that were implemented. It returns a P-value for the null hypothesis that the
+means of the groups are equal. The P-value is essentially a significance level.
+In our case the significance level is defined as 5\% and as we can see from the
+results none of the P-values are lower than that level and therefore the null
+hypothesis can not be rejected.The lower value appears for `Disgust’ which
+means that the algorithms disagree the most for that class while the higher
+value is for `Happiness’ and means that all algorithms are very similar
+regarding that class.
+
+\subsubsection{Multi comparison tests}
+\begin{figure}[h]
+    \begin{center}
+    \begin{tabular}{|c||r|r|r|r|r|r|r|r|r|} \hline 
+    & \multicolumn{3}{|c|}{DT \& NN} & \multicolumn{3}{|c|}{DT \& CBR} & \multicolumn{3}{|c|}{NN \& CBR} \\ \hline \hline
+    Anger & -0.6721 & -0.1833 & 0.3055 &-0.6755 & -0.1866 & 0.3021 & -0.4921 & -0.0033 & 0.4855\\ \hline
+    Disgust & -0.0428 & 0.0676 & 0.1781 & -0.0428 & 0.0676 & 0.1781 & -0.1104 & 0 & 0.1104 \\ \hline
+    Fear & -0.6496 & -0.1000 & 0.44960 & -0.6496 & -0.1000 & 0.4496 & -0.5496 & 0 & 0.5496 \\ \hline
+    Happiness & 0 & 0 & 0& 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+    Sadness & -0.6083 & -0.1033 & 0.4016 & -0.6750 & -0.1700 & 0.3350 & -0.5716 & -0.0666 & 0.4383 \\ \hline
+    Surprise & -0.3703 & -0.0199 & 0.3303 & -0.3703 & -0.0199 & 0.3303 & -0.3503 & 0 & 0.3503 \\ \hline
+    \end{tabular}
+    \caption{Clean data multi comparison tests}
+    \end{center}
+\end{figure}
+
+\subsection{Tests on noisy data}
+\subsubsection{T-tests}
+Test results same as for clean data.
+
+\subsubsection{ANOVA tests}
+
+\begin{figure}[h]
+    \begin{center}
+    \begin{tabular}{|c||r|r|r|r|r|r|} \hline 
+    Emotion & Anger & Disgust & Fear & Happiness & Sadness & Surprise \\ \hline \hline
+    P-value & 0.9889 & 1.0000 & 0.7514 & 1.0000 & 0.8203 & 0.9894 \\ \hline
+    \end{tabular}
+    \caption{Noisy data ANOVA tests}
+    \end{center}
+\end{figure}
+
+
+\subsubsection{Multi comparison tests}
+
+\begin{figure}[h]
+    \begin{center}
+    \begin{tabular}{|c||r|r|r|r|r|r|r|r|r|} \hline 
+    & \multicolumn{3}{|c|}{DT \& NN} & \multicolumn{3}{|c|}{DT \& CBR} & \multicolumn{3}{|c|}{NN \& CBR} \\ \hline \hline
+    Anger & -0.5165 & -0.0167 & 0.4831 & 0.5298 & -0.0300 & 0.4698 & -0.5131 & -0.0133 & 0.4865 \\ \hline
+    Disgust & -0.3506 & 0 & 0.3506 & -0.3506 & 0 & 0.3506 & -0.3506 & 0 & 0.3506\\ \hline
+    Fear & -0.4193 & 0.0333 & 0.4860 & -0.3193 & 0.1333 & 0.5860 & -0.3527 & 0.1000 & 0.5527 \\ \hline
+    Happiness & 0 & 0 & 0& 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+    Sadness & -0.4165 & 0.1200 & 0.6565 & -0.4198 & 0.1167 & 0.6532 & -0.5398 & -0.0033 & 0.5332 \\ \hline
+    Surprise & -0.3440 & 0.0057 & 0.3554 & -0.3640 & -0.0143 & 0.3354 & -0.3697 & -0.0200 & 0.3297 \\ \hline
+    \end{tabular}
+    \caption{Noisy data multi conparison tests}
+    \end{center}
+\end{figure}
+
+As we can see, the multi comparison tests agree with the anova tests for the
+`happiness’ emotion where the p-value is 1. That is the reason why the mean
+value difference in the multiple comparison tests for the emotion `happiness’
+is zero. 
+
+\section{Adding new emotion classes}
+
+The more suitable  algorithm for adding new emotion classes is the Case Based
+Reasoning. The CBR will only need from the user to add the new class and the
+cases that lead to that class. Then the algorithm is ready to start classifying
+the data without the need to rebuild it from the beginning.
+
+The decision trees can easily incorporate the new classes as well. However,
+they will need some more engineering effort than the CBR. The reason for this
+is that for the Decision Trees algorithm there is a discrete decision tree for
+each class, so the only thing that is needed to be done is to create a decision
+tree for each one of the new classes. The rest decision trees, for the old
+classes, will be the same. 
+
+On the other hand, the neural networks will require a lot more effort than both
+of the other algorithms. The neural networks have to retrain from the beginning
+using the new data, the data with the new classes. Additionally, it will be
+needed from us to make experiments with different values for the parameters of
+the network, in order to find those that perform best.  
+
+\section{T-test and ANOVA assumptions}
+
+\end{document}
